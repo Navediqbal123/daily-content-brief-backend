@@ -29,23 +29,7 @@ app.post('/api/generate', async (req, res) => {
               role: 'user',
               parts: [
                 {
-                  text: `You are a content strategist for a US-focused YouTube/Instagram channel in the "${niche}" niche.
-
-Search for today's top 3 trending topics in the US related to "${niche}".
-
-Return ONLY this JSON format, no extra text, no markdown:
-{
-  "topics": [
-    {
-      "topic": "topic name",
-      "title": "YouTube video title",
-      "hook": "First 3 seconds script hook",
-      "outline": ["point 1", "point 2", "point 3"],
-      "shorts": "30 second shorts script",
-      "hashtags": ["#tag1", "#tag2", "#tag3", "#tag4", "#tag5"]
-    }
-  ]
-}`
+                  text: `You are a content strategist for a US-focused YouTube/Instagram channel in the "${niche}" niche. Search for today's top 3 trending topics in the US related to "${niche}". Return ONLY this JSON format, no extra text, no markdown: {"topics":[{"topic":"topic name","title":"YouTube video title","hook":"First 3 seconds script hook","outline":["point 1","point 2","point 3"],"shorts":"30 second shorts script","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]}]}`
                 }
               ]
             }
@@ -55,6 +39,7 @@ Return ONLY this JSON format, no extra text, no markdown:
     );
 
     const data = await response.json();
+    console.log('Gemini response:', JSON.stringify(data));
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!text) return res.status(500).json({ error: 'No response from AI' });
@@ -64,7 +49,7 @@ Return ONLY this JSON format, no extra text, no markdown:
     res.json(parsed);
 
   } catch (err) {
-    console.error(err);
+    console.error('Error:', err);
     res.status(500).json({ error: 'Something went wrong' });
   }
 });
