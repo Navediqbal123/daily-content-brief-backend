@@ -17,30 +17,32 @@ app.post('/api/generate', async (req, res) => {
   }
 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tools: [{ google_search: {} }],
-          contents: [
-            {
-              role: 'user',
-              parts: [
-                {
-                  text: `You are a content strategist for a US-focused YouTube/Instagram channel in the "${niche}" niche. Search for today's top 3 trending topics in the US related to "${niche}". Return ONLY this JSON format, no extra text, no markdown: {"topics":[{"topic":"topic name","title":"YouTube video title","hook":"First 3 seconds script hook","outline":["point 1","point 2","point 3"],"shorts":"30 second shorts script","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]}]}`
-                }
-              ]
-            }
-          ]
-        })
-      }
-    );
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 2000,
+        messages: [
+          {
+            role: 'user',
+            content: `You are a content strategist for a US-focused YouTube/Instagram channel in the "${niche}" niche.
+
+Generate 3 highly engaging content ideas for today related to "${niche}" that would perform well for a US audience.
+
+Return ONLY this JSON format, no extra text, no markdown:
+{"topics":[{"topic":"topic name","title":"YouTube video title","hook":"First 3 seconds script hook","outline":["point 1","point 2","point 3"],"shorts":"30 second shorts script","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]}]}`
+          }
+        ]
+      })
+    });
 
     const data = await response.json();
-    console.log('Gemini response:', JSON.stringify(data));
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    console.log('Groq response:', JSON.stringify(data));
+    const text = data.choices?.[0]?.message?.content;
 
     if (!text) return res.status(500).json({ error: 'No response from AI' });
 
