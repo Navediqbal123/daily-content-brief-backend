@@ -39,12 +39,12 @@ For each topic provide:
 - A curiosity-driven power title
 - A cinematic pattern-interrupt hook (NOT a basic question, make it emotional or shocking, 2-3 sentences)
 - 3 content outline points
-- A SHORT SCRIPT: 60-80 words, fast paced, perfect for YouTube Shorts or Instagram Reels, ends with strong CTA
-- A LONG SCRIPT: exactly 1000 words, full professional YouTube video script with cinematic intro, storytelling, detailed main content sections, and powerful CTA at end
+- A SHORT SCRIPT: exactly 70 words, fast paced, YouTube Shorts/Reels, strong CTA at end. COUNT YOUR WORDS, do not go below 70 words.
+- A LONG SCRIPT: minimum 1000 words, do not stop before 1000 words, full professional YouTube video script with cinematic intro, 5 detailed sections with storytelling, examples, and powerful CTA at end. COUNT YOUR WORDS.
 - 5 hashtags (mix of broad and niche)
 
 Return ONLY this exact JSON format:
-{"topics":[{"topic":"topic name","title":"power video title","hook":"cinematic 2-3 sentence hook","outline":["point 1","point 2","point 3"],"shorts":"60-80 word shorts script with CTA","long":"1000 word full professional YouTube script with CTA","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]}]}`
+{"topics":[{"topic":"topic name","title":"power video title","hook":"cinematic 2-3 sentence hook","outline":["point 1","point 2","point 3"],"shorts":"exactly 70 word shorts script with CTA","long":"minimum 1000 word full professional YouTube script with CTA","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]}]}`
           }
         ]
       })
