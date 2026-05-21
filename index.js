@@ -25,16 +25,26 @@ app.post('/api/generate', async (req, res) => {
       },
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
-        max_tokens: 2000,
+        max_tokens: 8000,
         messages: [
           {
+            role: 'system',
+            content: `You are a viral content strategist for top US YouTube and Instagram creators. You write high-performing, emotionally engaging scripts that get millions of views. Your hooks are cinematic and pattern-interrupt style. Your scripts are storytelling-based with strong CTAs. Always return valid JSON only, no markdown, no extra text.`
+          },
+          {
             role: 'user',
-            content: `You are a content strategist for a US-focused YouTube/Instagram channel in the "${niche}" niche.
+            content: `Create 3 viral content ideas for a US YouTube/Instagram channel in the "${niche}" niche.
 
-Generate 3 highly engaging content ideas for today related to "${niche}" that would perform well for a US audience.
+For each topic provide:
+- A curiosity-driven power title
+- A cinematic pattern-interrupt hook (NOT a basic question, make it emotional or shocking, 2-3 sentences)
+- 3 content outline points
+- A SHORT SCRIPT: 60-80 words, fast paced, perfect for YouTube Shorts or Instagram Reels, ends with strong CTA
+- A LONG SCRIPT: exactly 1000 words, full professional YouTube video script with cinematic intro, storytelling, detailed main content sections, and powerful CTA at end
+- 5 hashtags (mix of broad and niche)
 
-Return ONLY this JSON format, no extra text, no markdown:
-{"topics":[{"topic":"topic name","title":"YouTube video title","hook":"First 3 seconds script hook","outline":["point 1","point 2","point 3"],"shorts":"30 second shorts script","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]}]}`
+Return ONLY this exact JSON format:
+{"topics":[{"topic":"topic name","title":"power video title","hook":"cinematic 2-3 sentence hook","outline":["point 1","point 2","point 3"],"shorts":"60-80 word shorts script with CTA","long":"1000 word full professional YouTube script with CTA","hashtags":["#tag1","#tag2","#tag3","#tag4","#tag5"]}]}`
           }
         ]
       })
